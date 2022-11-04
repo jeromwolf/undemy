@@ -29,7 +29,8 @@ model User {
   writtenComments   Comment[] @relation(name: "writtenComments")
   receivedComments  Comment[] @relation(name: "receivedComments")
 
-  authorCourses      Course[] @relation(name: "authorCourses")  
+  authorCourses      Course[] @relation(name: "authorCourses")
+  lessions           Lession[]
 
 }
 
@@ -72,9 +73,10 @@ model Course {
   favs              Fav[]
   reviews           Review[]
   sections          Section[]
+
+  lessions          Lession[]
 }
 
- 
 
 
 model Section {
@@ -100,7 +102,8 @@ model Episode {
   comments         Comment[]
 
   title             String
-  image             String?
+  imgSrc            String?
+  videoSrc          String?
   description       String    @db.MediumText
 }
 
@@ -140,6 +143,24 @@ model Review {
   score         Int
   course        Course   @relation(fields: [courseId], references: [id], onDelete:Cascade)
   courseId      Int
+}
+
+model Lession {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  StartDate     DateTime
+  EndDate       DateTime
+
+  course        Course   @relation(fields: [courseId], references: [id], onDelete:Cascade)
+  courseId      Int
+
+  user          User      @relation(fields: [userId], references: [id], onDelete:Cascade)
+  userId        Int 
+
+  status        String
+
 }
 
 

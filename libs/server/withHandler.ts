@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export interface ResponseType {
     ok: boolean;
-    [key: string] : any;
+    [key: string]: any;
 }
 
 type method = "GET" | "POST" | "DELETE";
@@ -34,3 +34,5 @@ export default function withHandler(
     };
 }
 
+
+ 

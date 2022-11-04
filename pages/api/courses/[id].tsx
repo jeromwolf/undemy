@@ -26,16 +26,43 @@ async function handler(
             avatar: true,
           },
         },
+        sections: {
+            select: {
+              id: true, 
+              title: true,
+            },
+        },
+      
         _count: {
             select: {
                 favs: true,
                 reviews: true,
+                sections: true,
             },
           },
-      },
-    }); 
+       },
+    });
 
-  res.json({ ok: true, courses  });
+    const sections = await client.section.findMany({
+        where: {
+          courseId: Number(courses?.id),
+        },
+        include: {
+          episodes: {
+            select: {
+              id: true, 
+              title: true,
+              videoSrc: true,
+              imgSrc: true,
+              description: true,
+            },
+          },
+        }
+    });
+
+    res.json({ ok: true,
+              courses,
+              sections  });
 }
 
 export default withApiSession(
